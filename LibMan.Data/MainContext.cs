@@ -1,0 +1,69 @@
+﻿using LibMan.Data.Models;
+using Microsoft.EntityFrameworkCore;
+
+namespace LibMan.Data
+{
+    public class MainContext : DbContext
+    {
+        public virtual DbSet<Author> Authors { get; set; }
+        public virtual DbSet<Book> Books { get; set; }
+        public virtual DbSet<BorrowTransaction> BorrowTransactions { get; set; }
+
+        public MainContext() : base() { }
+        public MainContext(DbContextOptions<MainContext> options) : base(options) { }
+
+        protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
+        {
+            base.ConfigureConventions(configurationBuilder);
+            configurationBuilder.Properties<string>().HaveMaxLength(300);
+            configurationBuilder.Properties<DateTime>().HaveColumnType("DateTime");
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Author>(e =>
+            {
+                e.HasKey(p => p.Id);
+
+                e.HasIndex(p => p.FullName)
+                 .IsUnique();
+
+                e.HasIndex(p => p.Email)
+                 .IsUnique();
+            });
+
+            modelBuilder.Entity<Book>(e =>
+            {
+                e.HasKey(p => p.Id);
+
+                e.Property(p => p.Genre)
+                 .HasConversion<int>();
+
+                e.HasOne(p => p.Author)
+                 .WithMany(p => p.Books)
+                 .HasForeignKey(p => p.AuthorId);
+            });
+
+            modelBuilder.Entity<BorrowTransaction>(e =>
+            {
+                e.HasKey(p => p.Id);
+
+                e.HasOne(p => p.Book)
+                 .WithMany(p => p.BorrowTransactions)
+                 .HasForeignKey(p => p.BookId);
+            });
+
+            modelBuilder.Entity<Author>().HasData(
+                new Author { Id = 1, FullName = "Joanne Kathleen Rowling John", Email = "jkrowling@example.com" },
+                new Author { Id = 2, FullName = "George Orwell John Doe", Email = "orwell@example.com" }
+                );
+
+            modelBuilder.Entity<Book>().HasData(
+                new Book { Id = 1, Title = "Harry Potter", Genre = GenreType.Adventure, AuthorId = 1, IsAvailable = true },
+                new Book { Id = 2, Title = "1984", Genre = GenreType.Fantasy, AuthorId = 2, IsAvailable = true }
+                );
+        }
+    }
+}
