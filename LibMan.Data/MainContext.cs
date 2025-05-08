@@ -10,7 +10,10 @@ namespace LibMan.Data
         public virtual DbSet<BorrowTransaction> BorrowTransactions { get; set; }
 
         public MainContext() : base() { }
-        public MainContext(DbContextOptions<MainContext> options) : base(options) { }
+        public MainContext(DbContextOptions<MainContext> options) : base(options) 
+        {
+            Database.EnsureCreated();
+        }
 
         protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
         {
