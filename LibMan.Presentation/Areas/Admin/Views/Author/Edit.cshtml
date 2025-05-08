@@ -22,7 +22,7 @@
 
     <div class="mb-3">
         <label asp-for="Bio" class="form-label">Biography (Max: 300 characters)</label>
-        <p id="charCount">(0 / 300)</p>
+        <p id="charCount">(0 / @AuthorViewModel.BioMax)</p>
         <textarea id="charArea" asp-for="Bio" type="textarea" class="form-control" rows="5" cols="33"></textarea>
         <span asp-validation-for="Bio" style="color: red;"></span>
     </div>
@@ -34,9 +34,9 @@
 {
     <script>
         document.getElementById("charArea").addEventListener("input", e => {
-            const maxLength = 300; // pass this using a view model ?
+            const maxLength = @AuthorViewModel.BioMax; // pass this using a view model ?
 
-            if(e.target.value.length >= 300)
+            if(e.target.value.length >= maxLength)
             {
                 e.target.value = e.target.value.substring(0, maxLength);
             }
