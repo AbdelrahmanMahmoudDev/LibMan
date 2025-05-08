@@ -1,4 +1,4 @@
-﻿using LibMan.Data.Models;
+﻿using LibMan.Domains;
 using Microsoft.EntityFrameworkCore;
 
 namespace LibMan.Data

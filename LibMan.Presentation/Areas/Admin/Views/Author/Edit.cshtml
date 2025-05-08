@@ -1,0 +1,48 @@
+﻿@model AuthorViewModel
+
+<form method="post" asp-area="Admin" asp-controller="Author" asp-action="Save">
+    <input type="hidden" asp-for="@Model.Id" />
+
+    <div class="mb-3">
+        <label asp-for="FullName" class="form-label">Full Name (Please enter the first 4 names, space separated) <span style="color: red;">*</span></label>
+        <input asp-for="FullName" type="text" class="form-control" placeholder="The full name">
+        <span asp-validation-for="FullName" style="color: red;"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Email" class="form-label">Email address <span style="color: red;">*</span></label>
+        <input asp-for="Email" type="email" class="form-control" aria-describedby="emailHelp">
+        <span asp-validation-for="Email" style="color: red;"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Website" class="form-label">Website Link</label>
+        <input asp-for="Website" type="url" class="form-control" placeholder="Author website link">
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Bio" class="form-label">Biography (Max: 300 characters)</label>
+        <p id="charCount">(0 / 300)</p>
+        <textarea id="charArea" asp-for="Bio" type="textarea" class="form-control" rows="5" cols="33"></textarea>
+        <span asp-validation-for="Bio" style="color: red;"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+@section Scripts 
+{
+    <script>
+        document.getElementById("charArea").addEventListener("input", e => {
+            const maxLength = 300; // pass this using a view model ?
+
+            if(e.target.value.length >= 300)
+            {
+                e.target.value = e.target.value.substring(0, maxLength);
+            }
+
+            const currentLength = e.target.value.length;
+            document.getElementById("charCount").textContent = `(${currentLength}/${maxLength})`
+        });
+    </script>
+}

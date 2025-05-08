@@ -9,11 +9,11 @@
   <ItemGroup>
     <ProjectReference Include="..\LibMan.Business\LibMan.Business.csproj" />
     <ProjectReference Include="..\LibMan.Data\LibMan.Data.csproj" />
+    <ProjectReference Include="..\LibMan.Domains\LibMan.Domains.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
-    <Folder Include="Areas\Admin\Models\" />
   </ItemGroup>
 
   <ItemGroup>

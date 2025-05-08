@@ -1,5 +1,4 @@
-﻿
-using LibMan.Data.Repository;
+﻿using LibMan.Data.Repository;
 
 namespace LibMan.Business.Author
 {
@@ -12,10 +11,43 @@ namespace LibMan.Business.Author
             _UnitOfWork = unitOfWork;
         }
 
-        public async Task<List<Data.Models.Author>> GetAllAuthors()
+        public async Task<List<Domains.Author>> GetAllAuthors()
         {
-            IEnumerable<Data.Models.Author> result = await _UnitOfWork.Authors.GetAllAsync();
+            IEnumerable<Domains.Author> result = await _UnitOfWork.Authors.GetAllAsync();
             return result.ToList();
+        }
+
+        public async Task<Domains.Author> GetAuthorBasedOnId(int id)
+        {
+            return await _UnitOfWork.Authors.GetByIdAsync(id);
+        }
+
+        public async Task<bool> SaveNew(Domains.Author newAuthor)
+        {
+            try
+            {
+                await _UnitOfWork.Authors.AddAsync(newAuthor);
+                await _UnitOfWork.SaveAsync();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> SaveUpdate(Domains.Author newAuthor)
+        {
+            try
+            {
+                _UnitOfWork.Authors.Update(newAuthor);
+                await _UnitOfWork.SaveAsync();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }
