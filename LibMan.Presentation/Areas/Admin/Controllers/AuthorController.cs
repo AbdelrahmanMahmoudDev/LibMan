@@ -39,24 +39,33 @@ namespace LibMan.Presentation.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Save(AuthorViewModel authorViewModel)
         {
-            bool IsSuccess = false;
+            if(!ModelState.IsValid)
+            {
+                return View("Edit", authorViewModel);
+            }
 
+            bool IsSuccess = false;
             Author newAuthor = ViewModelToModel.AuthorViewModelToModel(authorViewModel);
 
             if (newAuthor.Id == 0)
-            {
                 IsSuccess = await _AuthorService.SaveNew(newAuthor);
-            }
             else
-            {
                 IsSuccess = await _AuthorService.SaveUpdate(newAuthor);
-            }
+
+            if (!IsSuccess)
+                return StatusCode(500, "A server side error occured while processing your request");
+
+            return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            bool IsSuccess = await _AuthorService.RemoveAuthor(id);
 
             if (!IsSuccess)
             {
                 return StatusCode(500, "A server side error occured while processing your request");
             }
-
             return RedirectToAction("Index");
         }
     }

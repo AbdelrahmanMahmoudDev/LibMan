@@ -49,5 +49,27 @@ namespace LibMan.Business.Author
                 return false;
             }
         }
+
+        public async Task<bool> RemoveAuthor(int id)
+        {
+            try
+            {
+                Domains.Author targetAuthor = await _UnitOfWork.Authors.GetByIdAsync(id);
+
+                if (targetAuthor is not null)
+                {
+                    _UnitOfWork.Authors.Delete(targetAuthor);
+
+                    await _UnitOfWork.SaveAsync();
+
+                    return true;
+                }
+                throw new ArgumentNullException();
+            }
+            catch
+            {
+                return false;
+            }
+        }
     }
 }

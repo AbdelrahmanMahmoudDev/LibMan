@@ -6,5 +6,6 @@
         public Task<Domains.Author> GetAuthorBasedOnId(int id);
         public Task<bool> SaveNew(Domains.Author newAuthor);
         public Task<bool> SaveUpdate(Domains.Author newAuthor);
+        public Task<bool> RemoveAuthor(int id);
     }
 }
