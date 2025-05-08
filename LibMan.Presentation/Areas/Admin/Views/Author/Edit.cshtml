@@ -32,9 +32,10 @@
 
 @section Scripts 
 {
+    <partial name="_ValidationScriptsPartial" />
     <script>
         document.getElementById("charArea").addEventListener("input", e => {
-            const maxLength = @AuthorViewModel.BioMax; // pass this using a view model ?
+            const maxLength = @AuthorViewModel.BioMax;
 
             if(e.target.value.length >= maxLength)
             {
