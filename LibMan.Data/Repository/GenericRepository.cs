@@ -5,7 +5,7 @@ namespace LibMan.Data.Repository
 {
     public class GenericRepository<T> : IRepository<T> where T : class
     {
-        private readonly MainContext _Context;
+        public readonly MainContext _Context;
         private readonly DbSet<T> _DbSet;
 
         public GenericRepository(MainContext context)

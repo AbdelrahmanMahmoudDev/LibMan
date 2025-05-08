@@ -1,4 +1,6 @@
+using LibMan.Business.Author;
 using LibMan.Data;
+using LibMan.Data.Repository;
 using Microsoft.EntityFrameworkCore;
 
 namespace LibMan.Presentation
@@ -11,11 +13,11 @@ namespace LibMan.Presentation
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-            builder.Services.AddDbContext<MainContext>(options =>
-            {
-                options.UseInMemoryDatabase("LibManInMemoryDB")
-                       .EnableServiceProviderCaching(false);
-            });
+
+            builder.Services.AddDbContext<MainContext>(options => options.UseInMemoryDatabase("LibManInMemoryDB"));
+
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+            builder.Services.AddScoped<IAuthorService, AuthorService>();
 
             var app = builder.Build();
 
