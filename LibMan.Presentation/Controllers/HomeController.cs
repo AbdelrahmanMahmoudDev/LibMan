@@ -1,32 +1,21 @@
-using System.Diagnostics;
-using LibMan.Presentation.Models;
+using LibMan.Business.Book.Service;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LibMan.Presentation.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly IBookService _BookService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IBookService bookService)
         {
-            _logger = logger;
+            _BookService = bookService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            return View(await _BookService.GetAllBooksWithAuthor());
         }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
     }
 }

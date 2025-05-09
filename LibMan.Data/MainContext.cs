@@ -65,7 +65,7 @@ namespace LibMan.Data
 
             modelBuilder.Entity<Book>().HasData(
                 new Book { Id = 1, Title = "Harry Potter", Genre = GenreType.Adventure, AuthorId = 1, IsAvailable = true },
-                new Book { Id = 2, Title = "1984", Genre = GenreType.Fantasy, AuthorId = 2, IsAvailable = true }
+                new Book { Id = 2, Title = "1984", Genre = GenreType.Fantasy, AuthorId = 2, IsAvailable = false }
                 );
         }
     }
