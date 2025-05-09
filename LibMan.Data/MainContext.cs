@@ -10,7 +10,7 @@ namespace LibMan.Data
         public virtual DbSet<BorrowTransaction> BorrowTransactions { get; set; }
 
         public MainContext() : base() { }
-        public MainContext(DbContextOptions<MainContext> options) : base(options) 
+        public MainContext(DbContextOptions<MainContext> options) : base(options)
         {
             Database.EnsureCreated();
         }
@@ -60,12 +60,15 @@ namespace LibMan.Data
 
             modelBuilder.Entity<Author>().HasData(
                 new Author { Id = 1, FullName = "Joanne Kathleen Rowling John", Email = "jkrowling@example.com" },
-                new Author { Id = 2, FullName = "George Orwell John Doe", Email = "orwell@example.com" }
+                new Author { Id = 2, FullName = "George Orwell John Doe", Email = "orwell@example.com" },
+                new Author { Id = 3, FullName = "Charles Dickens John Doe", Email = "charles@example.com" }
                 );
 
             modelBuilder.Entity<Book>().HasData(
                 new Book { Id = 1, Title = "Harry Potter", Genre = GenreType.Adventure, AuthorId = 1, IsAvailable = true },
-                new Book { Id = 2, Title = "1984", Genre = GenreType.Fantasy, AuthorId = 2, IsAvailable = false }
+                new Book { Id = 2, Title = "1984", Genre = GenreType.Fantasy, AuthorId = 2, IsAvailable = true },
+                new Book { Id = 3, Title = "Animal Farm", Genre = GenreType.Fantasy, AuthorId = 2, IsAvailable = true },
+                new Book { Id = 4, Title = "A Tale of Two Cities", Genre = GenreType.Fantasy, AuthorId = 3, IsAvailable = true }
                 );
         }
     }

@@ -1,6 +1,7 @@
 using LibMan.Business.Book.Service;
 using LibMan.Business.Pagination;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace LibMan.Presentation.Controllers
 {
@@ -13,10 +14,14 @@ namespace LibMan.Presentation.Controllers
             _PaginatedBookService = paginatedBookService;
         }
 
-        public async Task<IActionResult> Index(int pageNumber = 1, int pageSize = 1)
+        public async Task<IActionResult> Index(int pageNumber = 1, int pageSize = 5)
         {
             return View(await _PaginatedBookService.GetPaginatedBooksAsync(pageNumber, pageSize));
         }
 
+        public async Task<IActionResult> FilterBooksAjax(List<string> statuses, int pageNumber = 1, int pageSize = 5)
+        {
+            return PartialView("_BooksPartial", await _PaginatedBookService.GetPaginatedBooksWithFiltersAsync(statuses, pageNumber, pageSize));
+        }
     }
 }
