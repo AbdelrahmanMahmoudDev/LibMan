@@ -13,7 +13,7 @@ namespace LibMan.Business.Pagination
 
             var pagedBooks = allBooks
                 .Skip((pageNumber - 1) * pageSize)
-                .Take(pageSize);                  
+                .Take(pageSize);
 
             var model = new PagedResult<Domains.Book>
             {
@@ -26,11 +26,9 @@ namespace LibMan.Business.Pagination
             return model;
         }
 
-        public async Task<PagedResult<Domains.Book>> GetPaginatedBooksWithFiltersAsync(List<string> statuses, int pageNumber = 1, int pageSize = 5)
+        public void PrepareStatusList(List<string> statuses, List<Domains.Book> allBooksList, out IQueryable<Domains.Book> allBooksQueryable)
         {
-            List<Domains.Book> allBooksList = await GetAllBooksWithAuthor();
-            IQueryable<Domains.Book> allBooksQueryable = allBooksList.AsQueryable();
-
+            allBooksQueryable = allBooksList.AsQueryable();
 
             if (statuses?.Count() > 0)
             {
@@ -40,19 +38,22 @@ namespace LibMan.Business.Pagination
                     boolStatuses.Add(bool.Parse(status));
                 }
 
-                var isAvailable = boolStatuses.Contains(true);
-                var isBorrowed = boolStatuses.Contains(false);
+                bool isAvailable = boolStatuses.Contains(true);
+                bool isBorrowed = boolStatuses.Contains(false);
 
                 allBooksQueryable = allBooksQueryable.Where(b => (isAvailable && b.IsAvailable) || (isBorrowed && !b.IsAvailable));
 
             }
+        }
 
+        public PagedResult<Domains.Book> PreparePagedResult(IQueryable<Domains.Book> allBooksQueryable, int pageNumber, int pageSize)
+        {
             var paginatedBooks = allBooksQueryable
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
                 .ToList();
 
-            var model = new PagedResult<Domains.Book>()
+            PagedResult<Domains.Book> model = new PagedResult<Domains.Book>()
             {
                 Items = paginatedBooks,
                 TotalItems = allBooksQueryable.Count(),
@@ -61,6 +62,15 @@ namespace LibMan.Business.Pagination
             };
 
             return model;
+        }
+
+        public async Task<PagedResult<Domains.Book>> GetPaginatedBooksWithFiltersAsync(List<string> statuses, int pageNumber = 1, int pageSize = 5)
+        {
+            List<Domains.Book> allBooksList = await GetAllBooksWithAuthor();
+
+            PrepareStatusList(statuses, allBooksList, out IQueryable<Domains.Book> allBooksQueryable);
+
+            return PreparePagedResult(allBooksQueryable, pageNumber, pageSize);
         }
     }
 }
