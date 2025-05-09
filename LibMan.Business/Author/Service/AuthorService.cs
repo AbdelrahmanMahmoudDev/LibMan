@@ -1,6 +1,6 @@
 ﻿using LibMan.Data.Repository;
 
-namespace LibMan.Business.Author
+namespace LibMan.Business.Author.Service
 {
     public class AuthorService : IAuthorService
     {
@@ -16,6 +16,8 @@ namespace LibMan.Business.Author
             IEnumerable<Domains.Author> result = await _UnitOfWork.Authors.GetAllAsync();
             return result.ToList();
         }
+
+        public async Task<List<string>> GetAllAuthorNames() => await _UnitOfWork.CustomAuthorRepository.GetAllAuthorNames();
 
         public async Task<Domains.Author> GetAuthorBasedOnId(int id)
         {

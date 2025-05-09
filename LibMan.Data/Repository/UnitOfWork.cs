@@ -1,4 +1,6 @@
-﻿using LibMan.Domains;
+﻿using LibMan.Data.Repository.CustomRepository.Author;
+using LibMan.Data.Repository.CustomRepository.Book;
+using LibMan.Domains;
 
 namespace LibMan.Data.Repository
 {
@@ -8,6 +10,8 @@ namespace LibMan.Data.Repository
         public IRepository<Book> Books { get; private set; }
         public IRepository<Author> Authors { get; private set; }
         public IRepository<BorrowTransaction> BorrowTransactions { get; private set; }
+        public IBookRepository CustomBookRepository { get; private set; }
+        public IAuthorRepository CustomAuthorRepository { get; private set; }
 
         public UnitOfWork(MainContext context)
         {
@@ -15,6 +19,7 @@ namespace LibMan.Data.Repository
             Books = new GenericRepository<Book>(_Context);
             Authors = new GenericRepository<Author>(_Context);
             BorrowTransactions = new GenericRepository<BorrowTransaction>(_Context);
+            CustomBookRepository = new BookRepository(_Context);
         }
 
         public void Dispose() => _Context.Dispose();

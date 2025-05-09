@@ -1,0 +1,62 @@
+﻿@model BookViewModel
+
+<form method="post" asp-area="Admin" asp-controller="Book" asp-action="Save">
+	<input type="hidden" asp-for="@Model.Id" />
+
+	<div class="mb-3">
+		<label asp-for="Title" class="form-label">Title <span style="color: red;">*</span></label>
+		<input asp-for="Title" type="text" class="form-control" placeholder="Title of the book">
+		<span asp-validation-for="Title" style="color: red;"></span>
+	</div>
+
+	<div class="mb-3">
+		<select asp-for="Genre" asp-items="@(new SelectList(BookViewModel.GenreList))" class="form-select">
+			<option value="">-- Select a genre --</option>
+		</select>
+	</div>
+
+	<div class="mb-3">
+		<label asp-for="Description" class="form-label">Book Description (Max: @BookViewModel.DescriptionMax characters)</label>
+		<p id="charCount">(0 / @BookViewModel.DescriptionMax)</p>
+		<textarea id="charArea" asp-for="Description" type="textarea" class="form-control" rows="5" cols="33"></textarea>
+		<span asp-validation-for="Description" style="color: red;"></span>
+	</div>
+
+	<div class="mb-3">
+		<label>Availability:</label>
+		<div class="form-check">
+			<input type="radio" asp-for="IsAvailable" class="form-check-input" value="true" id="availableYes" checked="@Model.IsAvailable" />
+			<label class="form-check-label" for="availableYes">Available</label>
+		</div>
+		<div class="form-check">
+			<input type="radio" asp-for="IsAvailable" class="form-check-input" value="false" id="availableNo" checked="@(Model.IsAvailable == false)" />
+			<label class="form-check-label" for="availableNo">Borrowed</label>
+		</div>
+	</div>
+
+	<div class="mb-3">
+		<select asp-for="AuthorId" asp-items="@(new SelectList(Model.AllAuthors, "Id", "FullName", Model.AuthorId))" class="form-select">
+			<option value="">-- Select an author --</option>
+		</select>
+	</div>
+
+	<button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+@section Scripts
+{
+	<partial name="_ValidationScriptsPartial" />
+	<script>
+		document.getElementById("charArea").addEventListener("input", e => {
+			const maxLength = @AuthorViewModel.BioMax;
+
+			if(e.target.value.length >= maxLength)
+			{
+				e.target.value = e.target.value.substring(0, maxLength);
+			}
+
+			const currentLength = e.target.value.length;
+			document.getElementById("charCount").textContent = `(${currentLength}/${maxLength})`
+		});
+	</script>
+}

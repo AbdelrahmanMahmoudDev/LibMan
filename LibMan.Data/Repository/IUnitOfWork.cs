@@ -1,4 +1,6 @@
-﻿using LibMan.Domains;
+﻿using LibMan.Data.Repository.CustomRepository.Author;
+using LibMan.Data.Repository.CustomRepository.Book;
+using LibMan.Domains;
 
 namespace LibMan.Data.Repository
 {
@@ -7,6 +9,8 @@ namespace LibMan.Data.Repository
         IRepository<Book> Books { get; }
         IRepository<Author> Authors { get; }
         IRepository<BorrowTransaction> BorrowTransactions { get; }
+        IBookRepository CustomBookRepository { get; }
+        IAuthorRepository CustomAuthorRepository { get; }
 
         Task<int> SaveAsync();
     }

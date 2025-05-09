@@ -1,4 +1,4 @@
-﻿using LibMan.Business.Author;
+﻿using LibMan.Business.Author.Service;
 using LibMan.Domains;
 using LibMan.Presentation.Areas.Admin.ViewModels;
 using LibMan.Presentation.Helpers;

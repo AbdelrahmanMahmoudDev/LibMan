@@ -21,5 +21,23 @@ namespace LibMan.Presentation.Helpers
 
             return newAuthor;
         }
+
+        public static Book BookViewModelToModel(BookViewModel bookViewModel)
+        {
+            if (bookViewModel == null)
+                throw new ArgumentNullException();
+
+            Book newBook = new Book()
+            {
+                Id = bookViewModel.Id,
+                Title = bookViewModel.Title,    
+                Genre = (GenreType)bookViewModel.Genre,
+                Description = bookViewModel.Description,
+                IsAvailable = bookViewModel.IsAvailable,
+                AuthorId = bookViewModel.AuthorId,
+            };
+
+            return newBook;
+        }
     }
 }
