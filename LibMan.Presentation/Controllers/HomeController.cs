@@ -1,20 +1,21 @@
 using LibMan.Business.Book.Service;
+using LibMan.Business.Pagination;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LibMan.Presentation.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IBookService _BookService;
+        private readonly IPaginatedBookService _PaginatedBookService;
 
-        public HomeController(IBookService bookService)
+        public HomeController(IPaginatedBookService paginatedBookService)
         {
-            _BookService = bookService;
+            _PaginatedBookService = paginatedBookService;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int pageNumber = 1, int pageSize = 1)
         {
-            return View(await _BookService.GetAllBooksWithAuthor());
+            return View(await _PaginatedBookService.GetPaginatedBooksAsync(pageNumber, pageSize));
         }
 
     }

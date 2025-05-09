@@ -1,8 +1,8 @@
-﻿@model List<Book>
+﻿@model PagedResult<Book>
 
 <!-- Header-->
-<header class="bg-dark py-5">
-	<div class="container px-4 px-lg-5 my-5">
+<header class="bg-dark py-1">
+	<div class="container px-4 px-lg-5 my-1">
 		<div class="text-center text-white">
 			<h1 class="display-4 fw-bolder">Welcome to the library!</h1>
 			<p class="lead fw-normal text-white-50 mb-0">For all your book needs</p>
@@ -11,12 +11,38 @@
 </header>
 
 <!-- Section-->
-<section class="py-5">
+<section class="py-2">
 	<div class="container px-4 px-lg-5 mt-5">
+		<div class="row">
+			<nav>
+				<ul class="pagination">
+					@if (Model.PageNumber > 1)
+					{
+						<li class="page-item">
+							<a class="page-link" asp-action="Index" asp-route-pageNumber="@(Model.PageNumber - 1)">Previous</a>
+						</li>
+					}
+
+					@for (int i = 1; i <= Model.TotalPages; i++)
+					{
+						<li class="page-item @(i == Model.PageNumber ? "active" : "")">
+							<a class="page-link" asp-action="Index" asp-route-pageNumber="@i">@i</a>
+						</li>
+					}
+
+					@if (Model.PageNumber < Model.TotalPages)
+					{
+						<li class="page-item">
+							<a class="page-link" asp-action="Index" asp-route-pageNumber="@(Model.PageNumber + 1)">Next</a>
+						</li>
+					}
+				</ul>
+			</nav>
+		</div>
 		<div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-			@if (@Model?.Count() > 0)
+			@if (Model.Items?.Count() > 0)
 			{
-				foreach (var book in Model)
+				@foreach (var book in Model.Items)
 				{
 					<div class="col mb-5">
 						<div class="card h-100">
@@ -30,8 +56,7 @@
 									<p>@book.Genre</p>
 									@if (book.Description is not null)
 									{
-										<p>book.Description</p>
-
+										<p>@book.Description</p>
 									}
 									@if (book.IsAvailable)
 									{
@@ -60,6 +85,8 @@
 					</div>
 				}
 			}
+
 		</div>
+		
 	</div>
 </section>

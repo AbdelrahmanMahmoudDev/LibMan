@@ -1,5 +1,6 @@
 using LibMan.Business.Author.Service;
 using LibMan.Business.Book.Service;
+using LibMan.Business.Pagination;
 using LibMan.Data;
 using LibMan.Data.Repository;
 using Microsoft.EntityFrameworkCore;
@@ -20,6 +21,7 @@ namespace LibMan.Presentation
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             builder.Services.AddScoped<IAuthorService, AuthorService>();
             builder.Services.AddScoped<IBookService, BookService>();
+            builder.Services.AddScoped<IPaginatedBookService, PaginatedBookService>();
 
             var app = builder.Build();
 
