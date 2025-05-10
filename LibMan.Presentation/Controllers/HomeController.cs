@@ -1,23 +1,19 @@
-using LibMan.Business.Book.Service;
 using LibMan.Business.BorrowTransaction.Service;
 using LibMan.Business.Pagination;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace LibMan.Presentation.Controllers
 {
     public class HomeController : Controller
     {
         private readonly IPaginatedBookService _PaginatedBookService;
-        private readonly IBookService _BookService;
         private readonly IBorrowTransactionService _BorrowTransactionService;
         private readonly IPaginatedDateFilteredBookService _PaginatedDateFilteredBookService;
 
-        public HomeController(IPaginatedBookService paginatedBookService, IBorrowTransactionService borrowTransactionService, IBookService bookService, IPaginatedDateFilteredBookService paginatedDateFilteredBookService)
+        public HomeController(IPaginatedBookService paginatedBookService, IBorrowTransactionService borrowTransactionService, IPaginatedDateFilteredBookService paginatedDateFilteredBookService)
         {
             _PaginatedBookService = paginatedBookService;
             _BorrowTransactionService = borrowTransactionService;
-            _BookService = bookService;
             _PaginatedDateFilteredBookService = paginatedDateFilteredBookService;
         }
 

@@ -67,11 +67,9 @@
 			applyFiltersButton.addEventListener("click", () => {
 				const borrowDate = document.getElementById("borrowDate").value;
 				const returnDate = document.getElementById("returnDate").value;
-				console.log("hyaa")
 				const url = new URL(window.location.href);
 				url.searchParams.delete("borrowDate");
 				url.searchParams.delete("returnDate");
-				console.log(window.location.href);
 
 				if (borrowDate) {
 					url.searchParams.append("borrowDate", borrowDate);
@@ -80,11 +78,20 @@
 					url.searchParams.append("returnDate", returnDate);
 				}
 
-				console.log(window.location.href);
 				window.location.href = url.toString();
-				console.log(window.location.href);
-				console.log(url.toString());
 			});
 		});
+	</script>
+
+	<script>
+		document.addEventListener("DOMContentLoaded", () => {
+			document.getElementById("resetFilters").addEventListener("click", () => {
+				window.location.href = "/";
+			});
+		});
+
+		document.addEventListener("DOMContentLoaded", document.getElementById("resetFilters").addEventListener("click", () => {
+				window.location.href = "/";
+			}));
 	</script>
 }

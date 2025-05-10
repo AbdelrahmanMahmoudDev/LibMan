@@ -24,31 +24,59 @@
 @section Scripts
 {
 	<script>
-		document.addEventListener("DOMContentLoaded", () => {
-			document.getElementById("submitBtn").addEventListener("click", e => {
+
+			$(document).ready(function () {
+			$("#submitBtn").click(function (e) {
 				e.preventDefault();
-				const bookId = document.getElementById("Id").value;
-				if(bookId != 0) {
+				const bookId = $("#Id").val();
+
+				if (bookId != 0) {
 					const payload = {
 						chosenBookId: bookId,
 					};
 
-					fetch("/BorrowTransaction/UpdateAvailabilityAjax", {
+					$.ajax({
+						url: "/BorrowTransaction/UpdateAvailabilityAjax",
 						method: "POST",
-						headers: {
-							"Content-Type": "application/json",
+						contentType: "application/json",
+						data: JSON.stringify(payload),
+						success: function (data) {
+							$("#liveUpdateForm").html(data);
 						},
-						body: JSON.stringify(payload)
-					})
-					.then(response => response.text())
-					.then(data => {
-						document.getElementById("liveUpdateForm").innerHTML = data;
-					})
-					.catch(error => console.error("error posting data: ", error));
+						error: function (xhr, status, error) {
+							console.error("Error posting data: ", error);
+						}
+					});
 				}
-
 			});
 		});
+
+
+		// document.addEventListener("DOMContentLoaded", () => {
+		// 	document.getElementById("submitBtn").addEventListener("click", e => {
+		// 		e.preventDefault();
+		// 		const bookId = document.getElementById("Id").value;
+		// 		if(bookId != 0) {
+		// 			const payload = {
+		// 				chosenBookId: bookId,
+		// 			};
+
+		// 			fetch("/BorrowTransaction/UpdateAvailabilityAjax", {
+		// 				method: "POST",
+		// 				headers: {
+		// 					"Content-Type": "application/json",
+		// 				},
+		// 				body: JSON.stringify(payload)
+		// 			})
+		// 			.then(response => response.text())
+		// 			.then(data => {
+		// 				document.getElementById("liveUpdateForm").innerHTML = data;
+		// 			})
+		// 			.catch(error => console.error("error posting data: ", error));
+		// 		}
+
+		// 	});
+		// });
 
 	</script>
 }
