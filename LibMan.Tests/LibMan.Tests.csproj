@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\LibMan.Data\LibMan.Data.csproj" />
+    <ProjectReference Include="..\LibMan.Domains\LibMan.Domains.csproj" />
   </ItemGroup>
 
   <ItemGroup>
