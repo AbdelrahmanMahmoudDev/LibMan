@@ -1,0 +1,14 @@
+Assumptions:
+* A book cannot be borrowed multiple times
+* A genre is an Enum
+* Deleting an author deletes their associated books
+
+Architecture decisions:
+Data Access:
+------------
+* I decided to implement the generic repository and unit of work patterns alongside
+the service layer, ultimately it didn't seem to be particularly beneficial (at least at this scale) and I ended up mostly writing a thin wrapper over DbContext that ultimately propagates to the service layer, this gave me time to study opinions regarding DbContext already implementing these patterns for us and this being a needless abstraction. Regardless, I am sure their are arguments to be made for both sides and hope to learn more in the future
+
+Frontend:
+---------
+* I experimented a bit with vanilla JavaScript in razor pages to see how it works and I would say there isn't a big difference from just using JQuery 
