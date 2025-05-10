@@ -1,5 +1,6 @@
 using LibMan.Business.Author.Service;
 using LibMan.Business.Book.Service;
+using LibMan.Business.BorrowTransaction.Service;
 using LibMan.Business.Pagination;
 using LibMan.Data;
 using LibMan.Data.Repository;
@@ -22,6 +23,7 @@ namespace LibMan.Presentation
             builder.Services.AddScoped<IAuthorService, AuthorService>();
             builder.Services.AddScoped<IBookService, BookService>();
             builder.Services.AddScoped<IPaginatedBookService, PaginatedBookService>();
+            builder.Services.AddScoped<IBorrowTransactionService, BorrowTransactionService>();
 
             var app = builder.Build();
 

@@ -10,6 +10,12 @@
 	</div>
 </header>
 
+<div class="card-footer my-1 px-4 pt-0 border-top-0 bg-transparent">
+	<div class="text-center">
+		<a class="btn btn-outline-dark mt-auto" asp-controller="BorrowTransaction" asp-action="index">Go to Borrow</a>
+		</div>
+</div>
+
 <div id="filteredBooks" class="mt-3">
 	@await Html.PartialAsync("_BooksPartial", Model)
 </div>

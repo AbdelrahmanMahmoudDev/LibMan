@@ -9,5 +9,6 @@
         public Task<bool> SaveNew(Domains.Book newBook);
         public Task<bool> SaveUpdate(Domains.Book newBook);
         public Task<bool> RemoveBook(int id);
+        public Task UpdateBookAvailability(int id);
     }
 }

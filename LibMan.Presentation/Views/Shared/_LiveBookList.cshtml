@@ -1,0 +1,21 @@
+﻿@model BookViewModel
+
+<div class="mb-3">
+	<select id="Id" name="Id" class="form-select">
+		<option value="">-- Select a book --</option>
+		@if (Model.AllBooks?.Count() > 0)
+		{
+			@foreach (Book book in Model.AllBooks)
+			{
+				if (book.IsAvailable)
+				{
+					<option value="@book.Id">@book.Title</option>
+				}
+				else
+				{
+					<option value="@book.Id" disabled>@book.Title</option>
+				}
+			}
+		}
+	</select>
+</div>

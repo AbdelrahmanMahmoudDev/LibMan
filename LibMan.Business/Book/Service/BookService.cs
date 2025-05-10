@@ -81,5 +81,15 @@ namespace LibMan.Business.Book.Service
                 return false;
             }
         }
+
+        public async Task UpdateBookAvailability(int id)
+        {
+           Domains.Book chosenBook = await _UnitOfWork.Books.GetByIdAsync(id);
+
+            chosenBook.IsAvailable = !chosenBook.IsAvailable;
+
+            await SaveUpdate(chosenBook);
+        }
+
     }
 }

@@ -1,0 +1,48 @@
+﻿@model BookViewModel
+
+<div class="d-flex justify-content-center align-items-center" style="height: 75vh;">
+	<div class="p-3 rounded bg-success text-white">
+		Select the book you'd like to borrow
+
+		<form id="liveUpdateForm" method="post">
+			@Html.AntiForgeryToken()
+			<div>
+				@await Html.PartialAsync("_LiveBookList", Model)
+			</div>
+		</form>
+		<button id="submitBtn" type="submit" class="btn btn-primary">Borrow</button>
+
+	</div>
+</div>
+
+@section Scripts
+{
+	<script>
+		document.addEventListener("DOMContentLoaded", () => {
+			document.getElementById("submitBtn").addEventListener("click", e => {
+				e.preventDefault();
+				const bookId = document.getElementById("Id").value;
+				if(bookId != 0) {
+					const payload = {
+						chosenBookId: bookId,
+					};
+					// UpdateAvailabilityAjax
+					fetch("/BorrowTransaction/UpdateAvailabilityAjax", {
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json",
+						},
+						body: JSON.stringify(payload)
+					})
+					.then(response => response.text())
+					.then(data => {
+						document.getElementById("liveUpdateForm").innerHTML = data;
+					})
+					.catch(error => console.error("error posting data: ", error));
+				}
+
+			});
+		});
+
+	</script>
+}
