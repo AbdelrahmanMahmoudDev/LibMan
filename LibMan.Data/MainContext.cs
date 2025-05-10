@@ -46,7 +46,8 @@ namespace LibMan.Data
 
                 e.HasOne(p => p.Author)
                  .WithMany(p => p.Books)
-                 .HasForeignKey(p => p.AuthorId);
+                 .HasForeignKey(p => p.AuthorId)
+                 .OnDelete(DeleteBehavior.Cascade);
             });
 
             modelBuilder.Entity<BorrowTransaction>(e =>
