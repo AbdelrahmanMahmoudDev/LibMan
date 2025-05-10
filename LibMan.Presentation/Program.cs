@@ -24,6 +24,7 @@ namespace LibMan.Presentation
             builder.Services.AddScoped<IBookService, BookService>();
             builder.Services.AddScoped<IPaginatedBookService, PaginatedBookService>();
             builder.Services.AddScoped<IBorrowTransactionService, BorrowTransactionService>();
+            builder.Services.AddScoped<IPaginatedDateFilteredBookService, PaginatedDateFilteredBookService>();
 
             var app = builder.Build();
 

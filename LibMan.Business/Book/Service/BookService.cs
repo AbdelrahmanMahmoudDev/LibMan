@@ -90,5 +90,15 @@ namespace LibMan.Business.Book.Service
 
             await SaveUpdate(chosenBook);
         }
+
+        public async Task<List<Domains.Book>> GetAllBooksWithAuthorAndTransactions()
+        {
+            return await _UnitOfWork.CustomBookRepository.GetAllBooksWithAuthorAndTransactions();
+        }
+
+        public async Task<Domains.Book> GetBookBasedOnIdWithAuthorAndTransactions(int id)
+        {
+            return await _UnitOfWork.CustomBookRepository.GetBookBasedOnIdWithAuthorAndTransactions(id);
+        }
     }
 }

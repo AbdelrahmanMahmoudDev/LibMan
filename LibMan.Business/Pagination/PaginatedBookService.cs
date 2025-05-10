@@ -42,7 +42,6 @@ namespace LibMan.Business.Pagination
                 bool isBorrowed = boolStatuses.Contains(false);
 
                 allBooksQueryable = allBooksQueryable.Where(b => (isAvailable && b.IsAvailable) || (isBorrowed && !b.IsAvailable));
-
             }
         }
 

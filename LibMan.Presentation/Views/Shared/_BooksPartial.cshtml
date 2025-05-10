@@ -4,9 +4,9 @@
 <section class="py-2">
 	<div class="container px-4 px-lg-5 mt-5">
 		<div class="row">
-			<div class="col">
-				<p>Status</p>
-				<ul>
+			<div class="col-2">
+				<p style="font-weight: bold">Status</p>
+				<ul style="list-style: none;">
 					<li>
 						<div class="form-check">
 							<label class="form-check-label" for="chkBorrowed">Borrowed</label>
@@ -20,6 +20,14 @@
 						</div>
 					</li>
 				</ul>
+				<p style="font-weight: bold">Borrow Date</p>
+				<input id="borrowDate" type="date" class="form-control mb-2">
+
+				<p style="font-weight: bold">Return Date</p>
+				<input id="returnDate" type="date" class="form-control mb-2">
+
+				<button id="applyFilters" class="btn btn-primary">Filter by dates</button>
+
 			</div>
 			<nav class="col">
 				<ul class="pagination">
@@ -44,44 +52,75 @@
 						</li>
 					}
 				</ul>
-			</nav>
-		</div>
-		<div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-			@if (Model.Items?.Count() > 0)
-			{
-				@foreach (var book in Model.Items)
-				{
-					<div class="col mb-5">
-						<div class="card h-100">
-							<!-- Product image-->
-							<img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
-							<!-- Product details-->
-							<div class="card-body p-4">
-								<div class="text-center">
-									<!-- Product name-->
-									<h5 class="fw-bolder">@book.Title</h5>
-									<p>@book.Genre</p>
-									@if (book.Description is not null)
-									{
-										<p>@book.Description</p>
-									}
-									@if (book.IsAvailable)
-									{
-										<span class="disabled badge bg-success mt-auto">Available</span>
-									}
-									else
-									{
-										<span class="disabled badge bg-warning mt-auto">Borrowed</span>
-										<a class="btn btn-outline-dark mt-auto" asp-action="StartReturnTransaction" asp-route-bookId="@book.Id">Return</a>
+				<div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+					@if (Model.Items?.Count() > 0)
+					{
+						@foreach (var book in Model.Items)
+						{
+							<div class="col mb-5">
+								<div class="card h-100">
+									<!-- Product image-->
+									<img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
+									<!-- Product details-->
+									<div class="card-body p-4">
+										<div class="text-center">
+											<!-- Product name-->
+											<h5 class="fw-bolder">@book.Title</h5>
+											<p>@book.Genre</p>
+											@if (book.Description is not null)
+											{
+												<p>@book.Description</p>
+											}
+											@if (book.IsAvailable)
+											{
+												<span class="disabled badge bg-success mt-auto">Available</span>
+											}
+											else
+											{
+												<span class="disabled badge bg-warning mt-auto">Borrowed</span>
+												<a class="btn btn-outline-dark mt-auto" asp-action="StartReturnTransaction" asp-route-bookId="@book.Id">Return</a>
 
-									}
-									<p>@book.Author.FullName</p>
+											}
+											<p>@book.Author.FullName</p>
+										</div>
+									</div>
 								</div>
 							</div>
-						</div>
-					</div>
-				}
-			}
+						}
+					}
+				</div>
+			</nav>
 		</div>
 	</div>
 </section>
+
+@section Scripts
+{
+	<script>
+		document.addEventListener("DOMContentLoaded", () => {
+			const applyFiltersButton = document.getElementById("applyFilters");
+
+			applyFiltersButton.addEventListener("click", () => {
+				const borrowDate = document.getElementById("borrowDate").value;
+				const returnDate = document.getElementById("returnDate").value;
+				console.log("hyaa")
+				const url = new URL(window.location.href);
+				url.searchParams.delete("borrowDate");
+				url.searchParams.delete("returnDate");
+				console.log(window.location.href);
+
+				if (borrowDate) {
+					url.searchParams.append("borrowDate", borrowDate);
+				}
+				if (returnDate) {
+					url.searchParams.append("returnDate", returnDate);
+				}
+
+				console.log(window.location.href);
+				window.location.href = url.toString();
+				console.log(window.location.href);
+				console.log(url.toString());
+			});
+		});
+	</script>
+}
