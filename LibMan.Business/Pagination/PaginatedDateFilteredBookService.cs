@@ -1,11 +1,9 @@
 ﻿using LibMan.Data.Repository;
-using Microsoft.EntityFrameworkCore;
 
 namespace LibMan.Business.Pagination
 {
     public class PaginatedDateFilteredBookService : PaginatedBookService, IPaginatedDateFilteredBookService
     {
-
         public PaginatedDateFilteredBookService(IUnitOfWork unitOfWork) : base(unitOfWork) { }
 
         public async Task<PagedResult<Domains.Book>> GetBooksThatMatchBorrowAndReturnDates(DateTime borrowDate, DateTime returnDate, int pageNumber, int pageSize)

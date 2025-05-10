@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace LibMan.Business.BorrowTransaction.Service
+﻿namespace LibMan.Business.BorrowTransaction.Service
 {
     public interface IBorrowTransactionService
     {

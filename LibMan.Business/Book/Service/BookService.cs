@@ -1,6 +1,4 @@
 ﻿using LibMan.Data.Repository;
-using LibMan.Domains;
-using Microsoft.EntityFrameworkCore;
 namespace LibMan.Business.Book.Service
 {
     public class BookService : IBookService
