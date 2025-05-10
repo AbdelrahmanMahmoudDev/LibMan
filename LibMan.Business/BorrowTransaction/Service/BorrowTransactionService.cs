@@ -92,5 +92,17 @@ namespace LibMan.Business.BorrowTransaction.Service
                 return false;
             }
         }
+
+        public async Task<bool> StartReturnTransaction(int bookId)
+        {
+            Domains.BorrowTransaction targetBorrowTransaction = await _UnitOfWork.CustomBookRepository.GetLastTransactionOfBookBasedOnId(bookId);
+
+            targetBorrowTransaction.ReturnDate = DateTime.Now;
+            targetBorrowTransaction.Book.IsAvailable = true;
+
+            bool IsSuccessful = await SaveUpdate(targetBorrowTransaction);
+
+            return IsSuccessful;
+        }
     }
 }

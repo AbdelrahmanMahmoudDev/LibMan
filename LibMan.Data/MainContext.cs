@@ -70,6 +70,10 @@ namespace LibMan.Data
                 new Book { Id = 3, Title = "Animal Farm", Genre = GenreType.Fantasy, AuthorId = 2, IsAvailable = false },
                 new Book { Id = 4, Title = "A Tale of Two Cities", Genre = GenreType.Fantasy, AuthorId = 3, IsAvailable = true }
                 );
+
+            modelBuilder.Entity<BorrowTransaction>().HasData(
+                new BorrowTransaction { Id = 1, BorrowDate = DateTime.Now, ReturnDate = null, BookId = 3 }
+                );
         }
     }
 }

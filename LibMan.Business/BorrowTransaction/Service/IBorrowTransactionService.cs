@@ -15,5 +15,6 @@ namespace LibMan.Business.BorrowTransaction.Service
         public Task<bool> SaveNew(int borrowedBookId);
         public Task<bool> SaveUpdate(Domains.BorrowTransaction newBorrowTransaction);
         public Task<bool> RemoveBorrowTransaction(int id);
+        public Task<bool> StartReturnTransaction(int bookId); 
     }
 }

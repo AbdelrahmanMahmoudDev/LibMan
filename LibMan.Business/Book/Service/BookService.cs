@@ -90,6 +90,5 @@ namespace LibMan.Business.Book.Service
 
             await SaveUpdate(chosenBook);
         }
-
     }
 }

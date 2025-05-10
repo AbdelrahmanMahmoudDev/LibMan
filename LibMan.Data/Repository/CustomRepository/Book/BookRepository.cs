@@ -17,5 +17,17 @@ namespace LibMan.Data.Repository.CustomRepository.Book
             return await _DbSet.Include(books => books.Author)
                    .FirstOrDefaultAsync(book => book.Id == id);
         }
+
+        public async Task<Domains.BorrowTransaction> GetLastTransactionOfBookBasedOnId(int id)
+        {
+            Domains.Book targetBook = (await _DbSet.Include(b => b.BorrowTransactions)
+                                                   .FirstOrDefaultAsync(b => b.Id == id))!;
+
+            Domains.BorrowTransaction targetBorrowTransaction = (targetBook?.BorrowTransactions
+                                                                            .OrderByDescending(b => b.BorrowDate)
+                                                                            .FirstOrDefault())!;
+
+            return targetBorrowTransaction;
+        }
     }
 }

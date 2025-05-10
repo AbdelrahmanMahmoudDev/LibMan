@@ -72,6 +72,8 @@
 									else
 									{
 										<span class="disabled badge bg-warning mt-auto">Borrowed</span>
+										<a class="btn btn-outline-dark mt-auto" asp-action="StartReturnTransaction" asp-route-bookId="@book.Id">Return</a>
+
 									}
 									<p>@book.Author.FullName</p>
 								</div>

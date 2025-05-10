@@ -1,5 +1,11 @@
 ﻿@model BookViewModel
 
+<div class="card-footer my-1 px-4 pt-0 border-top-0 bg-transparent">
+	<div class="text-center">
+		<a class="btn btn-outline-dark mt-auto" asp-controller="Home" asp-action="Index">Go to Homepage</a>
+	</div>
+</div>
+
 <div class="d-flex justify-content-center align-items-center" style="height: 75vh;">
 	<div class="p-3 rounded bg-success text-white">
 		Select the book you'd like to borrow
@@ -26,7 +32,7 @@
 					const payload = {
 						chosenBookId: bookId,
 					};
-					// UpdateAvailabilityAjax
+
 					fetch("/BorrowTransaction/UpdateAvailabilityAjax", {
 						method: "POST",
 						headers: {
